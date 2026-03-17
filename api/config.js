@@ -12,22 +12,31 @@ async function kvGet() {
   const res = await fetch(`${KV_URL}/get/${KV_KEY}`, {
     headers: { Authorization: `Bearer ${KV_TOKEN}` }
   });
+  if (!res.ok) return { ca: '', twitter: '', community: '' };
   const data = await res.json();
   if (data.result) {
-    return JSON.parse(data.result);
+    try {
+      return JSON.parse(data.result);
+    } catch (_) {
+      return { ca: '', twitter: '', community: '' };
+    }
   }
   return { ca: '', twitter: '', community: '' };
 }
 
 async function kvSet(value) {
-  await fetch(`${KV_URL}/set/${KV_KEY}`, {
+  const encoded = JSON.stringify(value);
+  const res = await fetch(`${KV_URL}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${KV_TOKEN}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(JSON.stringify(value))
+    body: JSON.stringify(["SET", KV_KEY, encoded])
   });
+  if (!res.ok) {
+    throw new Error('KV write failed');
+  }
 }
 
 module.exports = async function handler(req, res) {
