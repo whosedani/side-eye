@@ -89,15 +89,13 @@ body:hover .cursor-glow {
 
 .nav-right {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
+  align-items: center;
 }
 
 .ca-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .ca-label {
@@ -129,18 +127,15 @@ body:hover .cursor-glow {
   border-color: rgba(245,200,66,0.3);
 }
 
-.nav-socials {
-  display: flex;
-  gap: 14px;
-}
-
-.nav-socials a {
+.nav-social-icon {
   color: var(--white-dim);
   transition: color 0.25s ease, opacity 0.25s ease;
   opacity: 0.6;
+  display: flex;
+  align-items: center;
 }
 
-.nav-socials a:hover {
+.nav-social-icon:hover {
   color: var(--amber);
   opacity: 1;
 }
@@ -196,6 +191,11 @@ body:hover .cursor-glow {
   object-fit: contain;
   user-select: none;
   filter: drop-shadow(0 0 60px rgba(245,200,66,0.08));
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.hero-face-wrap:hover .hero-face {
+  transform: scaleX(-1);
 }
 
 .hero-tagline {
@@ -220,6 +220,64 @@ body:hover .cursor-glow {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ── Hero CA block ── */
+.hero-ca {
+  margin-top: 32px;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 1.6s;
+}
+
+.hero-ca-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 10px 20px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-ca-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--white-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-ca-address {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--amber);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-ca-address:hover {
+  opacity: 0.75;
+}
+
+.hero-social-icon {
+  color: var(--white-dim);
+  transition: color 0.25s ease, opacity 0.25s ease;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+}
+
+.hero-social-icon:hover {
+  color: var(--amber);
+  opacity: 1;
 }
 
 /* ── Ticker ── */
@@ -327,24 +385,40 @@ body:hover .cursor-glow {
 @media (max-width: 640px) {
   .nav {
     padding: 14px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
   }
 
-  .nav-right {
-    align-items: flex-start;
-    width: 100%;
+  .ca-row {
+    gap: 8px;
+  }
+
+  .ca-label {
+    display: none;
   }
 
   .ca-address {
-    max-width: 200px;
+    max-width: 140px;
     font-size: 10px;
   }
 
   .hero-face-wrap {
     width: 260px;
     height: 260px;
+  }
+
+  .hero-ca-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 14px;
+  }
+
+  .hero-ca-label {
+    display: none;
+  }
+
+  .hero-ca-address {
+    font-size: 10px;
+    max-width: 200px;
   }
 
   .gallery-grid {

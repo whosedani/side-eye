@@ -26,24 +26,26 @@
   }
 
   function applyConfig() {
-    const caBtn = document.getElementById('caAddress');
-    if (config.ca) {
-      caBtn.textContent = config.ca;
-    } else {
-      caBtn.textContent = 'TBA';
-    }
+    var caText = config.ca || 'TBA';
 
-    const twitterLink = document.getElementById('twitterLink');
-    const communityLink = document.getElementById('communityLink');
-    if (config.twitter) twitterLink.href = config.twitter;
-    if (config.community) communityLink.href = config.community;
+    // Nav
+    document.getElementById('caAddress').textContent = caText;
+    document.getElementById('twitterLink').href = config.twitter;
+    document.getElementById('communityLink').href = config.community;
+
+    // Hero
+    document.getElementById('heroCaAddress').textContent = caText;
+    document.getElementById('heroTwitterLink').href = config.twitter;
+    document.getElementById('heroCommunityLink').href = config.community;
   }
 
-  // ── Copy CA ──
-  document.getElementById('caAddress').addEventListener('click', function () {
-    if (!config.ca) return;
-    navigator.clipboard.writeText(config.ca).then(function () {
-      showToast();
+  // ── Copy CA (both buttons) ──
+  ['caAddress', 'heroCaAddress'].forEach(function (id) {
+    document.getElementById(id).addEventListener('click', function () {
+      if (!config.ca) return;
+      navigator.clipboard.writeText(config.ca).then(function () {
+        showToast();
+      });
     });
   });
 
