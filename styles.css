@@ -1,0 +1,357 @@
+/* ============================
+   SEYE — Side Eye Face
+   Dark cinematic theme
+   ============================ */
+
+:root {
+  --amber: #F5C842;
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --white: #e8e8e8;
+  --white-dim: rgba(232,232,232,0.5);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--amber);
+  color: #000;
+}
+
+/* ── Noise overlay ── */
+.noise {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Cursor glow ── */
+.cursor-glow {
+  position: fixed;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,200,66,0.05) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+body:hover .cursor-glow {
+  opacity: 1;
+}
+
+/* ── Nav ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--amber);
+  text-decoration: none;
+  letter-spacing: 2px;
+  user-select: none;
+}
+
+.nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.ca-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ca-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--white-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ca-address {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--amber);
+  background: rgba(245,200,66,0.08);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ca-address:hover {
+  background: rgba(245,200,66,0.14);
+  border-color: rgba(245,200,66,0.3);
+}
+
+.nav-socials {
+  display: flex;
+  gap: 14px;
+}
+
+.nav-socials a {
+  color: var(--white-dim);
+  transition: color 0.25s ease, opacity 0.25s ease;
+  opacity: 0.6;
+}
+
+.nav-socials a:hover {
+  color: var(--amber);
+  opacity: 1;
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #000;
+  background: var(--amber);
+  padding: 10px 24px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-face-wrap {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  will-change: transform;
+}
+
+.hero-face {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  filter: drop-shadow(0 0 60px rgba(245,200,66,0.08));
+}
+
+.hero-tagline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(22px, 3.5vw, 42px);
+  letter-spacing: 4px;
+  color: var(--white);
+  margin-top: 40px;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 1.2s;
+  text-align: center;
+  padding: 0 20px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Ticker ── */
+.ticker {
+  width: 100%;
+  overflow: hidden;
+  background: var(--amber);
+  padding: 12px 0;
+  white-space: nowrap;
+}
+
+.ticker-track {
+  display: flex;
+  animation: tickerScroll 20s linear infinite;
+  width: max-content;
+}
+
+.ticker-content {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: #000;
+  letter-spacing: 3px;
+  flex-shrink: 0;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Gallery ── */
+.gallery {
+  padding: 100px 32px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: 4px;
+  text-align: center;
+  margin-bottom: 48px;
+  color: var(--white);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  background: var(--surface);
+  aspect-ratio: 1;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover {
+  border-color: rgba(255,255,255,0.15);
+  transform: scale(1.04);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.02);
+}
+
+/* ── Footer ── */
+.footer {
+  padding: 80px 32px;
+  text-align: center;
+}
+
+.footer-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--white-dim);
+  letter-spacing: 2px;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .nav-right {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .ca-address {
+    max-width: 200px;
+    font-size: 10px;
+  }
+
+  .hero-face-wrap {
+    width: 260px;
+    height: 260px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery {
+    padding: 60px 16px 40px;
+  }
+}
